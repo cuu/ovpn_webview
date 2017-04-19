@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView android:layout_width="fill_parent" android:layout_height="wrap_content"
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <LinearLayout android:padding="3.0mm" style="@style/group">
+        <TextView android:id="@id/import_server_prompt" android:text="@string/import_server_prompt" style="@style/label" />
+        <AutoCompleteTextView android:id="@id/import_server" android:nextFocusDown="@id/username" android:prompt="@string/import_server_prompt" android:imeOptions="actionNext" style="@style/edit" />
+        <TextView android:id="@id/username_prompt" android:text="@string/username" style="@style/label" />
+        <EditText android:id="@id/username" android:nextFocusDown="@id/password" android:imeOptions="actionNext" style="@style/edit" />
+        <TextView android:id="@id/password_prompt" android:text="@string/password" style="@style/label" />
+        <EditText android:id="@id/password" android:password="true" android:imeOptions="actionDone" style="@style/edit" />
+        <LinearLayout android:padding="8.0sp" style="@style/group">
+            <CheckBox android:id="@id/import_autologin_checkbox" android:text="@string/import_autologin_checkbox_text" style="@style/item" />
+        </LinearLayout>
+        <LinearLayout android:orientation="horizontal" android:id="@id/import_button_group" android:layout_width="fill_parent" android:layout_height="fill_parent">
+            <Button android:id="@id/import_button" android:layout_width="0.0dip" android:text="@string/import_button_text" android:layout_weight="0.5" style="@style/item" />
+            <Button android:id="@id/import_cancel_button" android:layout_width="0.0dip" android:text="@string/import_cancel_button_text" android:layout_weight="0.5" style="@style/item" />
+        </LinearLayout>
+        <ProgressBar android:id="@id/import_progress" android:visibility="gone" android:layout_width="fill_parent" android:layout_height="wrap_content" style="@android:style/Widget.ProgressBar.Large" />
+    </LinearLayout>
+</ScrollView>

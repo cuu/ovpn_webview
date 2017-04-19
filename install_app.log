@@ -1,0 +1,5 @@
+sudo adb install bin/signed.apk 
+
+## To install into the only running  Emulator 
+/media/sda1/home/cuu/Downloads/android-sdk-linux/platform-tools/adb -e install bin/MyName-release-signed.apk
+/media/sda1/home/cuu/Downloads/android-sdk-linux/platform-tools/adb -e install bin/MyName-debug-unaligned.apk

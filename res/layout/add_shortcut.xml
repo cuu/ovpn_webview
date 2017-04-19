@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView android:layout_width="fill_parent" android:layout_height="wrap_content"
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <LinearLayout android:padding="3.0mm" style="@style/group">
+        <TextView android:text="@string/profile_context_menu_create_shortcut" style="@style/title" />
+        <LinearLayout android:padding="12.0dip" style="@style/info_box">
+            <LinearLayout style="@style/group_wrap">
+                <TextView android:text="@string/add_shortcut_help_text" style="@style/subtitle" />
+            </LinearLayout>
+        </LinearLayout>
+        <TextView android:text="@string/profile_prompt" style="@style/label" />
+        <Spinner android:id="@id/profile" android:prompt="@string/profile_prompt" style="@style/item_wrap" />
+        <TextView android:text="@string/create_shortcut_prompt" style="@style/label" />
+        <EditText android:id="@id/shortcut_name" android:imeOptions="actionDone" style="@style/edit" />
+        <LinearLayout android:orientation="horizontal" android:paddingTop="8.0sp" android:layout_width="fill_parent" android:layout_height="fill_parent">
+            <Button android:id="@id/cancel_shortcut_button" android:layout_width="0.0dip" android:text="@string/create_shortcut_cancel" android:layout_weight="0.5" style="@style/item" />
+            <Button android:id="@id/create_shortcut_button" android:layout_width="0.0dip" android:text="@string/create_shortcut_yes" android:layout_weight="0.5" style="@style/item" />
+        </LinearLayout>
+    </LinearLayout>
+</ScrollView>

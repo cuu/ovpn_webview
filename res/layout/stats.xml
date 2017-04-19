@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout android:padding="3.0mm" style="@style/group"
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <TextView android:text="@string/raw_stats_title" style="@style/item" />
+    <View style="@style/spacer16" />
+    <GridView android:gravity="left" android:id="@id/stats_grid" android:layout_width="fill_parent" android:layout_height="fill_parent" android:horizontalSpacing="10.0sp" android:verticalSpacing="5.0sp" android:stretchMode="none" android:columnWidth="200.0sp" android:numColumns="2" />
+</LinearLayout>

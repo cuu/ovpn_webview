@@ -1,0 +1,1 @@
+adb logcat OpenVPNClient:V OpenVPNService:V OpenVPNClientBase:V IndexClient:V chromium:V *:S

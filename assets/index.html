@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+  <meta charset="UTF-8">
+  <title>Westgalaxy VPN</title>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="format-detection" content="telephone=no">
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="Cache-Control" content="no-siteapp" />
+  <link rel="stylesheet" href="amazeui.min.css"/>
+  <link rel="stylesheet" href="amazeui.switch.css"/>
+
+  <script src="jquery.min.js"></script>
+
+  <script src="amazeui.min.js"></script>
+  <script src="amazeui.switch.min.js"></script>
+  <script src="jquery.marquee.min.js"></script>
+  
+  <script type="text/javascript">
+	
+	function init(){
+		
+	}
+
+	function openvpn(uilist){
+	this.opts = uilist;
+	this.apiloaded = false;
+	}
+	
+	openvpn.prototype.active = function(){
+		if(Android){
+			return Android.active();
+		}else
+		{
+			return false;
+		}
+	};
+
+	openvpn.prototype.init = function(){
+		this.reset_cnt_stat();
+		if(this.active())
+		{
+			this.dis_cnt_form();
+			this.set_cnt_stat("OK");
+		}
+	};
+
+	openvpn.prototype.cnt_form=function(){
+		this.opts.cnt_form.show();
+		this.opts.dis_cnt_form.hide();
+	};
+	
+	openvpn.prototype.dis_cnt_form= function(){
+		this.opts.cnt_form.hide();
+		this.opts.dis_cnt_form.show();
+	};
+	
+	openvpn.prototype.disable_form = function(env ){
+		this.username.prop("disabled",env);
+		this.password.prop("disabled",env);
+	};
+	
+	openvpn.prototype.reset_cnt_stat= function()
+	{
+		this.set_cnt_stat("BAN");
+	};
+
+	openvpn.prototype.set_cnt_stat = function (v){
+		localStorage.cntstat = v;
+	};
+	
+	openvpn.prototype.get_cnt_stat = function(){
+		return localStorage.cntstat;
+	};
+
+	openvpn.prototype.cancel = function(){
+		if(Android){
+			Android.Disconnect();
+		}
+		this.reset_cnt_stat();
+		this.opts.cnt_btn.val("连接");
+		this.opts.info.text("被取消");
+		
+	};
+	
+ 	openvpn.prototype.connect = function(){
+	
+		this.remember_me();
+
+		var username = this.opts.username.val();
+		var password = this.opts.password.val();
+		var line     = this.opts.line.data("orig");
+		
+		if( $.trim(username) == "" || $.trim(password) =="" || $.trim(line) == ""){
+			Android.showToast("请输入帐号或密码,并选择有效线路");
+			username = null;
+			password = null;
+			line     = null;
+			return;
+		}
+
+		if(this.get_cnt_stat() =="ING"){
+			this.cancel();
+			return;
+		}
+		else
+		{
+			this.set_cnt_stat("ING");
+			this.opts.cnt_btn.val("停止");
+				
+		}
+		
+		this.opts.stepbar.width("0%");
+		this.opts.stepbar.show();
+		if(Android){
+			Android.Connect(line,username,password);
+		}
+
+	};
+ 
+ 	openvpn.prototype.disconnect= function()
+	{
+		if(Android){	
+			Android.Disconnect();
+		}
+		this.opts.stepbar.hide();
+		this.opts.cnt_btn.val("连接");
+		this.opts.info.text("");
+		this.reset_cnt_stat();
+	} 
+
+	openvpn.prototype.select_ovpn = function (orig_str, decode_str)
+	{
+		this.opts.line.val(decode_str);
+
+		this.opts.line.data("orig",orig_str);
+
+		this.opts.linepopup.modal('close');
+		this.remember_me();
+	};
+ 
+	openvpn.prototype.remember_me = function(){
+
+     if ( this.opts.remember_me.is(':checked')) {
+        // save username and password
+       localStorage.usrname = this.opts.username.val();
+       localStorage.pass    = this.opts.password.val();
+       localStorage.chkbx   = this.opts.remember_me.val();
+			 localStorage.line1   = this.opts.line.data("orig");
+			 localStorage.line2   = this.opts.line.val();
+       } else {
+         localStorage.usrname = '';
+         localStorage.pass = '';
+         localStorage.chkbx = '';
+				 localStorage.line1 = "";
+				 localStorage.line2 = "选择线路";
+      }
+	};
+
+	openvpn.prototype.restore= function()
+	{
+   	if (localStorage.chkbx && localStorage.chkbx != '') {
+    	this.opts.remember_me.attr('checked', 'checked');
+      this.opts.username.val(localStorage.usrname);
+      this.opts.password.val(localStorage.pass);
+			this.opts.line.val( localStorage.line2);
+	this.opts.line.data("orig", localStorage.line1);
+    } else {
+    	this.opts.remember_me.removeAttr('checked');
+      this.opts.username.val('');
+      this.opts.password.val('');
+			this.opts.line.val("请选择线路");
+			this.opts.line.data("orig","");
+    }
+		
+		if(localStorage.cntstat )
+		{
+			if(localStorage.cntstat=="OK")//从状态恢复
+			{
+	                    this.dis_cnt_form();
+	                    this.getapi(localStorage.usrname,localStorage.pass);
+			}
+		}else
+		{
+			
+		}
+	};
+	
+	openvpn.prototype.vpn_event = function(res_id, progress,res_str){
+		
+		if( res_id != 3 && res_id != 6){		
+			this.opts.info.text(res_str);	
+		}
+
+	if(res_id == 2){
+	    this.getapi(this.opts.username.val(), this.opts.password.val());
+	}
+		this.opts.stepbar.width(progress+"%");
+		
+		if(progress == 0){
+			this.cnt_form();
+			this.reset_cnt_stat();
+	                this.opts.cnt_btn.val("连接");
+		}
+		if(progress == 100){
+			this.dis_cnt_form();
+	                this.set_cnt_stat("OK");
+	                
+	        }
+	
+	};
+
+	openvpn.prototype.get_profiles = function(){
+		if(Android){
+			this.profiles = Android.profile_names();
+		}else
+		{
+			this.profiles = "{\"profiles\":[\"LOAD FAILED\"]}";	
+		}
+	};
+
+	openvpn.prototype.set_info = function(str){
+	var me = this;
+	this.opts.info.text(str);
+	};
+
+	openvpn.prototype.daloapi=function(result){
+	this.opts.dis_info.text("");
+	
+	var obj = JSON.parse(result);
+	if(obj.hasOwnProperty("error")){
+	    if(obj.hasOwnProperty("message")){
+                this.opts.dis_info.text(obj.message);
+	    }else
+	    {
+	        this.opts.dis_info.text("Unknow error");
+	    }
+	
+	}else{
+	this.opts.usedDays.html( obj.activeDaysCount+"天" );
+	this.opts.usedFlow.html( Math.round((obj.globalTrafficCount/1024/1024))+"MB");
+	this.opts.leftDays.html( (obj.maxActiveDays- obj.activeDaysCount) +"天");
+	this.opts.leftFlow.html( Math.round(((obj.maxGlobalTraffic - obj.globalTrafficCount)/1024/1024)) + "MB");
+	this.apiloaded = true;
+	}
+	}
+
+	
+	openvpn.prototype.getapi = function(username,password){
+	
+	
+	if(this.apiloaded != undefined && this.apiloaded != true){
+	    Android.daloapi(username,password);
+	}
+		
+	}
+	openvpn.prototype.setanno=function(result){
+	    var obj=JSON.parse(result);
+	    if(obj.hasOwnProperty("notice")){
+	       this.opts.anno.html(obj.notice);
+	    }
+	        this.opts.anno.marquee({
+                  duration: 5000,
+                  startVisible: true,
+                  duplicated: false,
+                  delayBeforeStart:2000
+		});	
+	}
+	
+	openvpn.prototype.getanno= function(){
+	Android.getanno();
+	}
+	openvpn.prototype.reset_lines= function(){
+	        this.get_profiles();
+	        this.opts.profile_list.empty();
+	        var json = JSON.parse(this.profiles);
+		for(var i=0;i<json.profiles.length;i++){
+			var name = json.profiles[i];
+			this.opts.profile_list.append( $("<li>").append( $("<a>").attr({ href:"##", onclick:"OPENVPN.select_ovpn(\""+name+"\",\""+decodeURIComponent(name)+"\" );"} ).append( decodeURIComponent(name) ) ) );
+		}
+	        
+	
+	};
+	
+	openvpn.prototype.bindUIAction=function(){
+	        var me = this;
+	        /*
+		this.opts.remember_me.on("click",function(){
+			me.remember_me();	
+	        });
+	        */
+	
+		this.opts.remember_me.bootstrapSwitch({
+	          onSwitchChange: function(e, state) {
+                     me.remember_me();
+                  },
+	          onText:"开",
+	          offText:"关"
+	        });
+	
+		this.opts.cnt_btn.on("click",function(){
+			me.connect();
+		});
+		this.opts.dis_cnt_btn.on("click",function(){
+			me.disconnect();
+		});
+				
+						
+	};
+	
+
+	var OPENVPN;
+	function vpn_event (r,p,s){
+		if(OPENVPN.vpn_event!=undefined){
+		return OPENVPN.vpn_event(r,p,s);
+		}
+		else{
+			console.log("vpn_event error "+r +" " +p+ " "+ s);
+		}		
+	}
+
+	$(document).ready(function(){
+	
+		var UI= {
+			info:$("#info"),
+			stepbar:$("#stepbar"),
+			line: $("#ovpnline_name"),
+			username: $("#username"),
+			password: $("#password"),
+			remember_me:$("#remember-me"),
+			linepopup:$("#my-popup"),
+			cnt_btn:$("#cnt_btn"),
+			dis_cnt_btn:$("#dis_cnt"),
+			profile_list:$("#pfnlist"),
+			cnt_form:$("#cnt_form"),
+				dis_cnt_form:$("#dis_cnt_form"),
+				usedDays:$("#adc"),
+				usedFlow:$("#gtc"),
+				leftDays:$("#mgd"),
+				leftFlow:$("#mgt"),
+				dis_info:$("#dis_info"),
+				anno:$("#anno")
+		}
+
+		OPENVPN = new openvpn(UI);
+		OPENVPN.restore();
+		OPENVPN.init();
+		OPENVPN.getanno();
+		OPENVPN.bindUIAction();
+		
+		OPENVPN.reset_lines();
+
+	});
+   
+  </script>
+	
+  <style>
+    .header {
+      text-align: center;
+    }
+    .header h1 {
+      font-size: 200%;
+      color: #333;
+      margin-top: 30px;
+    }
+    .header p {
+      font-size: 14px;
+    }
+    .marquee {
+    width: 100%;
+    height:28px;
+    line-height:28px;
+    overflow: hidden;
+    background: black;
+    color: rgb(202, 255, 195);
+    }
+  </style>
+</head>
+<body>
+<div class="header">
+  <div class="am-g">
+    <img src="logo.jpg" alt="BANNER" style="width:100%;" />
+  </div>
+  
+  
+    <div id="anno" class="marquee"></div>
+  
+  
+</div>
+
+<div class="am-g">
+
+  <div class="am-u-lg-6 am-u-md-8 am-u-sm-centered" id="cnt_form">
+    <form method="post" class="am-form">
+      <label for="username">帐号:</label>
+      <input type="text" name="" id="username" value="">
+      <br>
+      <label for="password">密码:</label>
+      <input type="password" name="" id="password" value="">
+      <br>
+      <labe for="ovpnline_name">线路:</label>
+  		<input type="text" readonly id="ovpnline_name" value=""  data-am-modal="{target: '#my-popup'}" > 
+      <br />
+      
+      <label for="remember-me"></label>
+        <input id="remember-me" type="checkbox" >
+        记住密码
+      <br />
+
+			<div class="am-progress am-progress-striped am-progress-sm am-active " id="stepbar" style="display:none;">
+			  <div class="am-progress-bar am-progress-bar-secondary"  style="width: 100%"></div>
+			</div>
+			<div>
+				<label id="info"></label>
+			</div>		
+		
+      <div class="am-cf">
+        <input type="button" id="cnt_btn" name="" value="连   接"  class="am-btn am-btn-primary am-round am-fl am-btn-block  ">
+      </div>
+			
+
+    </form>
+  </div>
+
+<div class="am-u-lg-6 am-u-md-8 am-u-sm-centered" id="dis_cnt_form" style="display:none;">
+  <table class="am-table">
+    <tbody>
+      <tr>
+        <td>已用天数</td>
+        <td id="adc"></td>
+      </tr>
+      <tr>
+	<td>已用流量</td>
+        <td id="gtc"></td>
+      </tr>
+      <tr>
+	<td>剩余天数</td>
+        <td id="mgd"></td>
+      </tr>
+      <tr>
+	<td>剩余流量</td>
+        <td id="mgt"></td>
+      </tr>
+      
+    </tbody>
+  </table>
+  
+  <br />
+  <label id="dis_info"></label>
+  
+		<center>
+		<input type="button" id="dis_cnt" value="断开连接" class="am-btn am-btn-danger am-round am-btn-block ">
+		</center>
+
+  </div>
+
+<center>
+	<p>##copyright##</p>
+</center>
+
+</div>
+
+<div class="am-popup" id="my-popup">
+  <div class="am-popup-inner">
+    <div class="am-popup-hd" style="border-bottom:none;">
+      <h4 class="am-popup-title">选择线路</h4>
+      <span data-am-modal-close  class="am-close  am-close-alt ">&times;</span>
+    </div>
+
+  	<div>
+  		<!--列表标题-->
+  		<ul class="am-list  am-list-border" id="pfnlist" >
+
+
+  		</ul>
+
+    </div>
+
+
+
+			
+  </div>
+</div>
+
+
+
+</body>
+</html>

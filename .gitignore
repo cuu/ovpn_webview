@@ -1,0 +1,6 @@
+bin/*
+proguard-project.txt
+README.md
+gen/*
+profilemaker.php
+profiledecoder.php

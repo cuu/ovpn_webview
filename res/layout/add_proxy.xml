@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView android:layout_width="fill_parent" android:layout_height="wrap_content"
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <LinearLayout android:padding="3.0mm" style="@style/group">
+        <TextView android:id="@id/proxy_title" android:paddingBottom="16.0sp" android:text="@string/proxy_title_add" style="@style/title" />
+        <TextView android:id="@id/proxy_friendly_name_prompt" android:text="@string/proxy_friendly_name" style="@style/label" />
+        <EditText android:id="@id/proxy_friendly_name" android:nextFocusDown="@id/proxy_host" android:imeOptions="actionNext" style="@style/edit" />
+        <TextView android:id="@id/proxy_host_prompt" android:text="@string/proxy_host" style="@style/label" />
+        <EditText android:id="@id/proxy_host" android:nextFocusDown="@id/proxy_port" android:imeOptions="actionNext" style="@style/edit" />
+        <TextView android:id="@id/proxy_port_prompt" android:text="@string/proxy_port" style="@style/label" />
+        <EditText android:id="@id/proxy_port" android:inputType="number" android:imeOptions="actionDone" style="@style/edit" />
+        <LinearLayout android:padding="8.0sp" style="@style/group">
+            <CheckBox android:id="@id/proxy_allow_cleartext_auth_checkbox" android:text="@string/proxy_allow_cleartext_auth_checkbox" style="@style/item" />
+        </LinearLayout>
+        <LinearLayout android:orientation="horizontal" android:id="@id/proxy_button_group" android:layout_width="fill_parent" android:layout_height="fill_parent">
+            <Button android:id="@id/proxy_save_button" android:layout_width="0.0dip" android:text="@string/proxy_save_button" android:layout_weight="0.5" style="@style/item" />
+            <Button android:id="@id/proxy_cancel_button" android:layout_width="0.0dip" android:text="@string/proxy_cancel_button" android:layout_weight="0.5" style="@style/item" />
+        </LinearLayout>
+    </LinearLayout>
+</ScrollView>

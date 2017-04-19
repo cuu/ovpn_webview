@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout android:padding="3.0mm" style="@style/group"
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <TextView android:id="@id/about_text" style="@style/item" />
+    <TextView android:id="@id/core_text" style="@style/item" />
+    <LinearLayout android:id="@id/about_expire_group" style="@style/group">
+        <View style="@style/spacer16" />
+        <TextView android:id="@id/about_beta_expire_warn" style="@style/item" />
+    </LinearLayout>
+    <LinearLayout android:paddingTop="16.0sp" android:paddingBottom="16.0sp" style="@style/group">
+        <View android:background="#ff8080ff" android:layout_width="fill_parent" android:layout_height="2.0dip" />
+    </LinearLayout>
+    <ScrollView android:id="@id/about_scrollview" android:scrollbars="vertical" android:layout_width="fill_parent" android:layout_height="0.0dip" android:layout_weight="1.0">
+        <TextView android:id="@id/about_textview" android:layout_width="fill_parent" android:layout_height="wrap_content" />
+    </ScrollView>
+</LinearLayout>

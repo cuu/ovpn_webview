@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout android:padding="3.0mm" style="@style/group"
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <EditText android:id="@id/rename_profile_name" style="@style/edit" />
+</LinearLayout>

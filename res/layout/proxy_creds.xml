@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView android:layout_width="fill_parent" android:layout_height="wrap_content"
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <LinearLayout android:padding="12.0dip" style="@style/group">
+        <TextView android:id="@id/proxy_creds_title" style="@style/title" />
+        <TextView android:textColor="#ffff8080" android:id="@id/prev_creds_not_accepted" android:visibility="gone" android:text="@string/proxy_prev_creds_not_accepted" style="@style/item" />
+        <TextView android:paddingTop="8.0sp" android:text="@string/proxy_username" style="@style/label" />
+        <EditText android:id="@id/proxy_username" android:nextFocusDown="@id/proxy_password" android:imeOptions="actionNext" style="@style/edit" />
+        <TextView android:text="@string/proxy_password" style="@style/label" />
+        <EditText android:id="@id/proxy_password" android:password="true" android:imeOptions="actionDone" style="@style/edit" />
+        <LinearLayout android:padding="8.0sp" style="@style/group">
+            <CheckBox android:id="@id/proxy_remember_creds" android:text="@string/proxy_remember_creds_prompt" style="@style/item" />
+        </LinearLayout>
+        <LinearLayout android:orientation="horizontal" android:id="@id/proxy_button_group" android:layout_width="fill_parent" android:layout_height="fill_parent">
+            <Button android:id="@id/proxy_ok_button" android:layout_width="0.0dip" android:text="@string/proxy_ok_button" android:layout_weight="0.5" style="@style/item" />
+            <Button android:id="@id/proxy_cancel_button" android:layout_width="0.0dip" android:text="@string/proxy_cancel_button" android:layout_weight="0.5" style="@style/item" />
+        </LinearLayout>
+    </LinearLayout>
+</ScrollView>

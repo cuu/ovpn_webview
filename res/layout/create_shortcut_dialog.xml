@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout android:padding="3.0mm" style="@style/group"
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <TextView android:text="@string/create_shortcut_prompt" style="@style/label" />
+    <EditText android:id="@id/shortcut_name" style="@style/edit" />
+</LinearLayout>

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout android:padding="3.0mm" style="@style/group"
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <TextView android:text="@string/log_title" style="@style/item" />
+    <LinearLayout android:paddingTop="12.0sp" android:paddingBottom="12.0sp" style="@style/group">
+        <View android:background="#ff8080ff" android:layout_width="fill_parent" android:layout_height="2.0dip" />
+    </LinearLayout>
+    <ScrollView android:id="@id/log_scrollview" android:scrollbars="vertical" android:layout_width="fill_parent" android:layout_height="0.0dip" android:layout_weight="1.0">
+        <TextView android:id="@id/log_textview" android:layout_width="fill_parent" android:layout_height="wrap_content" />
+    </ScrollView>
+    <LinearLayout style="@style/group">
+        <Button android:id="@id/log_pause" android:visibility="gone" android:text="@string/log_pause" style="@style/item" />
+        <Button android:id="@id/log_resume" android:visibility="gone" android:text="@string/log_resume" style="@style/item" />
+    </LinearLayout>
+</LinearLayout>

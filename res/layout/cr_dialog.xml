@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout style="@style/group"
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <TextView android:id="@id/dialog_challenge" style="@style/item" />
+    <EditText android:id="@id/dialog_response" style="@style/edit" />
+</LinearLayout>

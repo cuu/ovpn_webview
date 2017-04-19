@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="vpn_proto_array">
+        <item>Adaptive</item>
+        <item>UDP</item>
+        <item>TCP</item>
+    </string-array>
+    <string-array name="vpn_proto_values">
+        <item>adaptive</item>
+        <item>udp</item>
+        <item>tcp</item>
+    </string-array>
+    <string-array name="conn_timeout_array">
+        <item>15 seconds</item>
+        <item>30 seconds</item>
+        <item>1 minute</item>
+        <item>2 minutes</item>
+        <item>Continuously retry</item>
+    </string-array>
+    <string-array name="conn_timeout_values">
+        <item>15</item>
+        <item>30</item>
+        <item>60</item>
+        <item>120</item>
+        <item>0</item>
+    </string-array>
+    <string-array name="compression_array">
+        <item>No</item>
+        <item>Full</item>
+        <item>Downlink only</item>
+    </string-array>
+    <string-array name="compression_values">
+        <item>no</item>
+        <item>yes</item>
+        <item>asym</item>
+    </string-array>
+    <string-array name="tls_version_min_override_array">
+        <item>Disabled</item>
+        <item>Profile Default</item>
+        <item>TLS 1.0</item>
+        <item>TLS 1.1</item>
+        <item>TLS 1.2</item>
+    </string-array>
+    <string-array name="tls_version_min_override_values">
+        <item>disabled</item>
+        <item>default</item>
+        <item>tls_1_0</item>
+        <item>tls_1_1</item>
+        <item>tls_1_2</item>
+    </string-array>
+</resources>
