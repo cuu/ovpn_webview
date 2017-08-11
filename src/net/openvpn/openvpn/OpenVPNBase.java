@@ -15,19 +15,19 @@ public class OpenVPNBase {
     
     static {
 	version="1.3";
-	author = "QQ 398437535";
-        app_path = "http://softradius.com/app_api/";
-        web = "http://softradius.com/";
+	author = "Cuu ";
+        app_path = "http://examples.com/app_api/";
+        web = "http://examples.com/";
         app_key = "APP_KEY_CODE";
 	
 	download_profile = true;
-	profile_link = "http://t61.guu.party/profile.dat";
+	profile_link = "http://192.168.1.100/profile.dat";
 	api_url      = "http://118.178.90.182:5000/u.php";
 	gg_url       = "http://118.178.90.182:5000/up.php";
 	
 	about_str = "关于:<br />"+
-"    <a target=\"_blank\" href=\"http://westgalaxy.taobao.com\">官网</a><br />"+
-"    QQ : 398437535<br />";
+"    官网 <br />"+
+"    QQ : <br />";
 	
     }
 }
